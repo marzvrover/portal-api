@@ -50,26 +50,4 @@ export class Form {
 
         return this.invalidElements.length === 0;
     }
-
-    validateWRONG(data: any) {
-        this.invalidElements = [];
-
-        let keys = Object.keys(data);
-
-        for (let key of keys) {
-            key = key.toLowerCase();
-            let elem = this.elements.find(elem => elem.name.toLowerCase() == key);
-            let valid: boolean = false;
-
-            // @ts-ignore
-            valid = elem.validate(data[key]);
-
-            if (! valid) {
-                // @ts-ignore
-                this.invalidElements.push(elem);
-            }
-        }
-
-        return this.invalidElements.length === 0;
-    }
 }
