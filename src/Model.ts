@@ -1,8 +1,7 @@
 import {Portal} from "./Portal";
+import {ModelInterface, ModelInterfaceStatic} from "./interfaces/ModelInterface";
 
 export abstract class Model {
-    abstract model_name: string;
-    abstract booted: boolean = false;
     protected attributes: JSON;
 
     protected constructor(params?: any) {
@@ -12,9 +11,7 @@ export abstract class Model {
             this.addAttributes(params)
     }
 
-    abstract boot(): void;
-
-    protected addAttributes(params: any) {
+    addAttributes(params: any) {
         const keys = Object.keys(params);
 
         for (let key of keys) {
@@ -22,7 +19,7 @@ export abstract class Model {
         }
     }
 
-    protected addAttribute(name: string, value: any) {
+    addAttribute(name: string, value: any) {
         // @ts-ignore
         this.attributes[name] = value;
     }
@@ -41,27 +38,51 @@ export abstract class Model {
         this.addAttribute(name, value);
     }
 
-    all() {
-        return Portal.API.list(this.model_name);
+    static all(model_name: string) {
+        return Portal.API.list(model_name);
     }
 
-    find(id: string) {
-        return Portal.API.view(this.model_name, id);
+    find(model_name: string, id: string) {
+        return Portal.API.view(model_name, id);
     }
 
-    add() {
-        return Portal.API.add(this.model_name, this.attributes);
+    add(model_name: string) {
+        return Portal.API.add(model_name, this.attributes);
     }
 
-    edit(id: string) {
-        return Portal.API.edit(this.model_name, id, this.attributes);
+    edit(model_name: string, id: string) {
+        return Portal.API.edit(model_name, id, this.attributes);
     }
 
-    delete(id: string) {
-        return Portal.API.delete(this.model_name, id);
+    delete(model_name: string, id: string) {
+        return Portal.API.delete(model_name, id);
     }
 
-    form() {
-        return Portal.API.form(this.model_name);
+    form(model_name: string) {
+        return Portal.API.form(model_name);
+    }
+
+    /**
+     * Compares two models.
+     *
+     * Returns 0 if models are of the same type and have the same slug.
+     * The return value is negative if they are different model types
+     * and positive if they are different slugs but of the same type.
+     *
+     * @param model1
+     * @param model2
+     *
+     * @return number
+     */
+    static compare(model1: ModelInterfaceStatic & ModelInterface, model2: ModelInterfaceStatic & ModelInterface): number {
+        let out: number;
+
+        if (model1.model_name !== model2.model_name) {
+            out = -1;
+        } else if (model1.get('slug') !== model2.get('slug')) {
+            out = 1;
+        } else out = 0;
+
+        return out;
     }
 }
