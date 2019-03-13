@@ -123,7 +123,7 @@ export class API {
             if (query.type.toLowerCase() == 'post') {
                 axios.post(API.url(query.params), query.data)
                     .then((response) => {
-                        resolve(response);
+                        resolve(response.data);
                     })
                     .catch((error) => {
                         reject(error)
