@@ -124,7 +124,7 @@ class API {
             if (query.type.toLowerCase() == 'post') {
                 axios_1.default.post(API.url(query.params), query.data)
                     .then((response) => {
-                    resolve(response);
+                    resolve(response.data);
                 })
                     .catch((error) => {
                     reject(error);

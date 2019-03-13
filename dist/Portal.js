@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Settings = __importStar(require("./Settings"));
 const API_1 = require("./API");
 const Model_1 = require("./Model");
+const App_1 = require("./models/App");
 var Portal;
 (function (Portal) {
     Portal.VERSION = Settings.VERSION;
@@ -17,5 +18,11 @@ var Portal;
     Portal.DEBUG = Settings.DEBUG;
     Portal.API = API_1.API;
     Portal.Model = Model_1.Model;
+    Portal.App = App_1.App;
+    Portal.App.boot();
+    function ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    Portal.ucfirst = ucfirst;
 })(Portal = exports.Portal || (exports.Portal = {}));
 //# sourceMappingURL=Portal.js.map
