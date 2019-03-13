@@ -1,6 +1,7 @@
 {
+  "private": true,
   "name": "portal-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A TypeScript library for interacting with the portal-ex server.",
   "main": "./dist/Portal.js",
   "scripts": {
@@ -23,7 +24,8 @@
     "@types/jest": "^24.0.9",
     "jest": "^24.1.0",
     "ts-jest": "^24.0.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "pluralize": "^7.0.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
