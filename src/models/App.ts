@@ -1,5 +1,6 @@
 import {Model} from "../Model";
 import {ModelInterface, ModelInterfaceStatic, staticImplements} from "../interfaces/ModelInterface";
+import pluralize = require("pluralize");
 
 @staticImplements<ModelInterfaceStatic>()
 export class App extends Model implements ModelInterface {
@@ -26,7 +27,16 @@ export class App extends Model implements ModelInterface {
     }
 
     static all() {
-        return super.all(this.model_name);
+        return super.all(this.model_name).then((response) => {
+            let models = [];
+
+            for (let modelData of response[pluralize(this.model_name)]) {
+                models.push(new this(modelData));
+            }
+
+            return models;
+        });
+    }
     }
 
     find(id: string) {
