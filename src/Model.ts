@@ -46,6 +46,14 @@ export abstract class Model {
         return Portal.API.view(model_name, id);
     }
 
+    update(model_name: string) {
+        return Model.find(model_name, this.get('slug')).then((response) => {
+            this.addAttributes(response[model_name]);
+
+            return response;
+        });
+    }
+
     save(model_name: string) {
         // return Portal.API.add(model_name, this.attributes);
 

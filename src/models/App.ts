@@ -44,6 +44,10 @@ export class App extends Model implements ModelInterface {
         });
     }
 
+    update() {
+        return super.update(this.type.model_name).then(() => {
+           return this;
+        });
     }
 
     add() {
