@@ -141,7 +141,7 @@ export class API {
 
         for (let key of keys) {
             // @ts-ignore
-            url += key + "=" + params[key];
+            url += key + "=" + params[key] + "&";
         }
 
         return url;
