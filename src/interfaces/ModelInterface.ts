@@ -6,9 +6,8 @@ export interface ModelInterface {
 
     get(name: string): any;
     set(name: string, value: any): any;
-    find(id: string): any;
-    add(): any;
-    edit(id: string): any;
+    update(): any;
+    save(): any;
     delete(id: string): any;
     form(): any;
 }
@@ -19,6 +18,8 @@ export interface ModelInterfaceStatic {
 
     boot(): void;
     all(): any;
+    find(id: string): any;
+    create(attributes: any): any;
 }
 
 export function staticImplements<T>() {
