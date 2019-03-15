@@ -42,11 +42,11 @@ export abstract class Model {
         return Portal.API.list(model_name);
     }
 
-    find(model_name: string, id: string) {
+    static find(model_name: string, id: string) {
         return Portal.API.view(model_name, id);
     }
 
-    add(model_name: string) {
+    save(model_name: string) {
         return Portal.API.add(model_name, this.attributes);
     }
 
