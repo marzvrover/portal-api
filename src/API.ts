@@ -1,6 +1,7 @@
 import { Portal } from './Portal';
 import * as Settings from './Settings';
 import axios from 'axios';
+import qs from 'qs';
 
 export class API {
     static readonly URL = Settings.URL + '/api/' + Settings.VERSION;
@@ -121,7 +122,7 @@ export class API {
                 : 'POST';
 
             if (query.type.toLowerCase() == 'post') {
-                axios.post(API.url(query.params), query.data)
+                axios.post(API.url(query.params), qs.stringify(query.data))
                     .then((response) => {
                         resolve(response.data);
                     })
