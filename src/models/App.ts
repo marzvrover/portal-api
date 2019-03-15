@@ -50,12 +50,16 @@ export class App extends Model implements ModelInterface {
         });
     }
 
-    add() {
-        return super.add(this.type.model_name);
+    save() {
+        return super.save(this.type.model_name);
     }
 
-    edit(id: string) {
-        return super.edit(this.type.model_name, id);
+    static async create(attributes: any) {
+        let model = new this(attributes);
+
+        await model.save();
+
+        return model;
     }
 
     delete(id: string) {
