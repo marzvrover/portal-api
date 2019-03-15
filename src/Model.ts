@@ -47,11 +47,25 @@ export abstract class Model {
     }
 
     save(model_name: string) {
-        return Portal.API.add(model_name, this.attributes);
-    }
+        // return Portal.API.add(model_name, this.attributes);
 
-    edit(model_name: string, id: string) {
-        return Portal.API.edit(model_name, id, this.attributes);
+        let promise;
+
+        if (this.get('slug') === undefined) {
+            promise = Portal.API.add(model_name, this.attributes).then((response) => {
+                this.addAttributes(response[model_name]);
+
+                return response;
+            });
+        } else {
+            promise = Portal.API.edit(model_name, this.get('slug'), this.attributes).then((response) => {
+                this.addAttributes(response[model_name]);
+
+                return response;
+            });
+        }
+
+        return promise;
     }
 
     delete(model_name: string, id: string) {
