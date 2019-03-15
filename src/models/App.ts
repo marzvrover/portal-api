@@ -37,10 +37,13 @@ export class App extends Model implements ModelInterface {
             return models;
         });
     }
+
+    static find(id: string) {
+        return super.find(this.model_name, id).then((response) => {
+            return new this(response[this.model_name]);
+        });
     }
 
-    find(id: string) {
-        return super.find(this.type.model_name, id);
     }
 
     add() {
