@@ -126,6 +126,7 @@ export class API {
                         resolve(response.data);
                     })
                     .catch((error) => {
+                        if (Settings.DEBUG) console.log(error);
                         reject(error)
                     })
             }
