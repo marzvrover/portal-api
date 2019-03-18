@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Portal_1 = require("./Portal");
 const Settings = __importStar(require("./Settings"));
 const axios_1 = __importDefault(require("axios"));
+const qs_1 = __importDefault(require("qs"));
 class API {
     static list(model) {
         return new Promise((resolve, reject) => {
@@ -122,11 +123,16 @@ class API {
                 ? query.type
                 : 'POST';
             if (query.type.toLowerCase() == 'post') {
-                axios_1.default.post(API.url(query.params), query.data)
+                axios_1.default.post(API.url(query.params), qs_1.default.stringify(query.data))
                     .then((response) => {
+                    if (Portal_1.Portal.DEBUG) {
+                        console.log(response);
+                    }
                     resolve(response.data);
                 })
                     .catch((error) => {
+                    if (Settings.DEBUG)
+                        console.log(error);
                     reject(error);
                 });
             }
@@ -137,7 +143,7 @@ class API {
         let url = API.URL + "?";
         for (let key of keys) {
             // @ts-ignore
-            url += key + "=" + params[key];
+            url += key + "=" + params[key] + "&";
         }
         return url;
     }

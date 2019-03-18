@@ -29,19 +29,43 @@ class Model {
         }
     }
     set(name, value) {
-        this.addAttribute(name, value);
+        if (value == undefined)
+            this.deleteAttribute(name);
+        else
+            this.addAttribute(name, value);
+    }
+    deleteAttribute(name) {
+        // @ts-ignore
+        delete this.attributes[name];
     }
     static all(model_name) {
         return Portal_1.Portal.API.list(model_name);
     }
-    find(model_name, id) {
+    static find(model_name, id) {
         return Portal_1.Portal.API.view(model_name, id);
     }
-    add(model_name) {
-        return Portal_1.Portal.API.add(model_name, this.attributes);
+    update(model_name) {
+        return Model.find(model_name, this.get('slug')).then((response) => {
+            this.addAttributes(response[model_name]);
+            return response;
+        });
     }
-    edit(model_name, id) {
-        return Portal_1.Portal.API.edit(model_name, id, this.attributes);
+    save(model_name) {
+        // return Portal.API.add(model_name, this.attributes);
+        let promise;
+        if (this.get('slug') === undefined) {
+            promise = Portal_1.Portal.API.add(model_name, this.attributes).then((response) => {
+                this.addAttributes(response[model_name]);
+                return response;
+            });
+        }
+        else {
+            promise = Portal_1.Portal.API.edit(model_name, this.get('slug'), this.attributes).then((response) => {
+                this.addAttributes(response[model_name]);
+                return response;
+            });
+        }
+        return promise;
     }
     delete(model_name, id) {
         return Portal_1.Portal.API.delete(model_name, id);

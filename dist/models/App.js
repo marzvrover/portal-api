@@ -10,6 +10,7 @@ var App_1;
 "use strict";
 const Model_1 = require("../Model");
 const ModelInterface_1 = require("../interfaces/ModelInterface");
+const pluralize = require("pluralize");
 let App = App_1 = class App extends Model_1.Model {
     constructor(params) {
         super(params);
@@ -26,19 +27,37 @@ let App = App_1 = class App extends Model_1.Model {
         return super.set(name, value);
     }
     static all() {
-        return super.all(this.model_name);
+        return super.all(this.model_name).then((response) => {
+            let models = [];
+            for (let modelData of response[pluralize(this.model_name)]) {
+                models.push(new this(modelData));
+            }
+            return models;
+        });
     }
-    find(id) {
-        return super.find(this.type.model_name, id);
+    static find(id) {
+        return super.find(this.model_name, id).then((response) => {
+            if (!response.hasOwnProperty(this.model_name))
+                return undefined;
+            else
+                return new this(response[this.model_name]);
+        });
     }
-    add() {
-        return super.add(this.type.model_name);
+    update() {
+        return super.update(this.type.model_name).then(() => {
+            return this;
+        });
     }
-    edit(id) {
-        return super.edit(this.type.model_name, id);
+    save() {
+        return super.save(this.type.model_name);
     }
-    delete(id) {
-        return super.delete(this.type.model_name, id);
+    static async create(attributes) {
+        let model = new this(attributes);
+        await model.save();
+        return model;
+    }
+    delete() {
+        return super.delete(this.type.model_name, this.get('slug')).then((response) => response.success);
     }
     form() {
         return super.form(this.type.model_name);

@@ -4,10 +4,9 @@ export interface ModelInterface {
     addAttribute(name: string, value: any): any;
     get(name: string): any;
     set(name: string, value: any): any;
-    find(id: string): any;
-    add(): any;
-    edit(id: string): any;
-    delete(id: string): any;
+    update(): any;
+    save(): any;
+    delete(): any;
     form(): any;
 }
 export interface ModelInterfaceStatic {
@@ -15,6 +14,8 @@ export interface ModelInterfaceStatic {
     booted: boolean;
     boot(): void;
     all(): any;
+    find(id: string): any;
+    create(attributes: any): any;
 }
 export declare function staticImplements<T>(): (constructor: T) => void;
 //# sourceMappingURL=ModelInterface.d.ts.map

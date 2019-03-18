@@ -6,10 +6,11 @@ export declare abstract class Model {
     addAttribute(name: string, value: any): void;
     get(name: string): any;
     set(name: string, value: any): void;
+    deleteAttribute(name: string): void;
     static all(model_name: string): Promise<any>;
-    find(model_name: string, id: string): Promise<any>;
-    add(model_name: string): Promise<any>;
-    edit(model_name: string, id: string): Promise<any>;
+    static find(model_name: string, id: string): Promise<any>;
+    update(model_name: string): Promise<any>;
+    save(model_name: string): Promise<any>;
     delete(model_name: string, id: string): Promise<any>;
     form(model_name: string): Promise<any>;
     /**

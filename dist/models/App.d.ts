@@ -8,11 +8,12 @@ export declare class App extends Model implements ModelInterface {
     static boot(): void;
     get(name: string): any;
     set(name: string, value: any): void;
-    static all(): Promise<any>;
-    find(id: string): Promise<any>;
-    add(): Promise<any>;
-    edit(id: string): Promise<any>;
-    delete(id: string): Promise<any>;
+    static all(): Promise<App[]>;
+    static find(id: string): Promise<App | undefined>;
+    update(): Promise<this>;
+    save(): Promise<any>;
+    static create(attributes: any): Promise<App>;
+    delete(): Promise<any>;
     form(): Promise<any>;
 }
 //# sourceMappingURL=App.d.ts.map
