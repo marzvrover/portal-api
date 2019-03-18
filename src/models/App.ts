@@ -40,7 +40,8 @@ export class App extends Model implements ModelInterface {
 
     static find(id: string) {
         return super.find(this.model_name, id).then((response) => {
-            return new this(response[this.model_name]);
+            if (! response.hasOwnProperty(this.model_name)) return undefined;
+            else return new this(response[this.model_name]);
         });
     }
 
