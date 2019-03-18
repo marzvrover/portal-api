@@ -35,7 +35,13 @@ export abstract class Model {
     }
 
     set(name: string, value: any) {
-        this.addAttribute(name, value);
+        if (value == undefined) this.deleteAttribute(name);
+        else this.addAttribute(name, value);
+    }
+
+    deleteAttribute(name: string) {
+        // @ts-ignore
+        delete this.attributes[name];
     }
 
     static all(model_name: string) {
