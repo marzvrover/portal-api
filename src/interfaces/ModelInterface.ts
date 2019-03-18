@@ -8,7 +8,7 @@ export interface ModelInterface {
     set(name: string, value: any): any;
     update(): any;
     save(): any;
-    delete(id: string): any;
+    delete(): any;
     form(): any;
 }
 
