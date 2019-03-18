@@ -1,24 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Portal_1 = require("./Portal");
-class Model {
-    constructor(params) {
+var Portal_1 = require("./Portal");
+var Model = /** @class */ (function () {
+    function Model(params) {
         // @ts-ignore
         this.attributes = {};
         if (params !== undefined && params !== null)
             this.addAttributes(params);
     }
-    addAttributes(params) {
-        const keys = Object.keys(params);
-        for (let key of keys) {
+    Model.prototype.addAttributes = function (params) {
+        var keys = Object.keys(params);
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
             this.addAttribute(key, params[key]);
         }
-    }
-    addAttribute(name, value) {
+    };
+    Model.prototype.addAttribute = function (name, value) {
         // @ts-ignore
         this.attributes[name] = value;
-    }
-    get(name) {
+    };
+    Model.prototype.get = function (name) {
         if (this.attributes.hasOwnProperty(name)) {
             // @ts-ignore
             return this.attributes[name];
@@ -27,52 +28,54 @@ class Model {
             // @ts-ignore
             return this[name];
         }
-    }
-    set(name, value) {
+    };
+    Model.prototype.set = function (name, value) {
         if (value == undefined)
             this.deleteAttribute(name);
         else
             this.addAttribute(name, value);
-    }
-    deleteAttribute(name) {
+    };
+    Model.prototype.deleteAttribute = function (name) {
         // @ts-ignore
         delete this.attributes[name];
-    }
-    static all(model_name) {
+    };
+    Model.all = function (model_name) {
         return Portal_1.Portal.API.list(model_name);
-    }
-    static find(model_name, id) {
+    };
+    Model.find = function (model_name, id) {
         return Portal_1.Portal.API.view(model_name, id);
-    }
-    update(model_name) {
-        return Model.find(model_name, this.get('slug')).then((response) => {
-            this.addAttributes(response[model_name]);
+    };
+    Model.prototype.update = function (model_name) {
+        var _this = this;
+        return Model.find(model_name, this.get('slug')).then(function (response) {
+            _this.addAttributes(response[model_name]);
             return response;
         });
-    }
-    save(model_name) {
+    };
+    Model.prototype.save = function (model_name) {
         // return Portal.API.add(model_name, this.attributes);
-        let promise;
+        var _this = this;
+        var promise;
         if (this.get('slug') === undefined) {
-            promise = Portal_1.Portal.API.add(model_name, this.attributes).then((response) => {
-                this.addAttributes(response[model_name]);
+            promise = Portal_1.Portal.API.add(model_name, this.attributes).then(function (response) {
+                _this.addAttributes(response[model_name]);
                 return response;
             });
         }
         else {
-            promise = Portal_1.Portal.API.edit(model_name, this.get('slug'), this.attributes).then((response) => {
-                this.addAttributes(response[model_name]);
+            promise = Portal_1.Portal.API.edit(model_name, this.get('slug'), this.attributes).then(function (response) {
+                _this.addAttributes(response[model_name]);
                 return response;
             });
         }
         return promise;
-    }
-    delete(model_name, id) {
+    };
+    Model.prototype.delete = function (model_name, id) {
         return Portal_1.Portal.API.delete(model_name, id);
-    }
-    form(model_name) {
+    };
+    Model.prototype.form = function (model_name) {
         return Portal_1.Portal.API.form(model_name);
-    }
+    };
     /**
      * Compares two models.
      *
@@ -85,8 +88,8 @@ class Model {
      *
      * @return number
      */
-    static compare(model1, model2) {
-        let out;
+    Model.compare = function (model1, model2) {
+        var out;
         if (model1.model_name !== model2.model_name) {
             out = -1;
         }
@@ -96,7 +99,8 @@ class Model {
         else
             out = 0;
         return out;
-    }
-}
+    };
+    return Model;
+}());
 exports.Model = Model;
 //# sourceMappingURL=Model.js.map

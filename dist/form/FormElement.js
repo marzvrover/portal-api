@@ -4,15 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
-const validator_1 = __importDefault(require("validator"));
-class FormElement {
-    constructor(name, type, required = false) {
+var validator_1 = __importDefault(require("validator"));
+var FormElement = /** @class */ (function () {
+    function FormElement(name, type, required) {
+        if (required === void 0) { required = false; }
         this.name = name;
         this.type = type;
         this.required = required;
     }
-    validate(value) {
-        let valid = false;
+    FormElement.prototype.validate = function (value) {
+        var valid = false;
         if (value !== undefined) {
             switch (this.type.toLowerCase()) {
                 case 'text':
@@ -43,7 +44,8 @@ class FormElement {
         if (!this.required && (value == undefined || value == '' || value == null))
             valid = true;
         return valid;
-    }
-}
+    };
+    return FormElement;
+}());
 exports.FormElement = FormElement;
 //# sourceMappingURL=FormElement.js.map

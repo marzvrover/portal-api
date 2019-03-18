@@ -7,10 +7,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Settings = __importStar(require("./Settings"));
-const API_1 = require("./API");
-const Model_1 = require("./Model");
-const App_1 = require("./models/App");
+var Settings = __importStar(require("./Settings"));
+var API_1 = require("./API");
+var Model_1 = require("./Model");
+var App_1 = require("./models/App");
 var Portal;
 (function (Portal) {
     Portal.VERSION = Settings.VERSION;
