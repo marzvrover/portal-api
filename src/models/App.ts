@@ -63,8 +63,10 @@ export class App extends Model implements ModelInterface {
         return model;
     }
 
-    delete(id: string) {
-        return super.delete(this.type.model_name, id);
+    delete() {
+        return super.delete(this.type.model_name, this.get('slug')).then(
+            (response) => response.success
+        );
     }
 
     form() {
