@@ -124,6 +124,10 @@ export class API {
             if (query.type.toLowerCase() == 'post') {
                 axios.post(API.url(query.params), qs.stringify(query.data))
                     .then((response) => {
+                        if (Portal.DEBUG) {
+                            console.log(response);
+                        }
+
                         resolve(response.data);
                     })
                     .catch((error) => {
