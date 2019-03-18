@@ -1,9 +1,24 @@
 import {Portal} from "./Portal";
 import {App} from "./models/App";
+import {ModelInterfaceStatic} from "./interfaces/ModelInterface";
 
 const MODELS = [
   App,
 ];
+
+let modelAllLoaded = {};
+
+async function modelAll(model: ModelInterfaceStatic) {
+    if (! modelAllLoaded.hasOwnProperty(model.model_name)) {
+        await model.all().then((response: any) => {
+            // @ts-ignore
+            modelAllLoaded[model.model_name] = response;
+        });
+    }
+
+    // @ts-ignore
+    return modelAllLoaded[model.model_name];
+}
 
 for (let model of MODELS) {
     describe(Portal.ucfirst(model.model_name), () => {
@@ -13,8 +28,14 @@ for (let model of MODELS) {
         });
 
         test('Model can access API', () => {
-            return model.all().then((response) => {
-                expect(response).toBeDefined();
+            return modelAll(model).then((all) => {
+                expect(all).toBeDefined();
+            });
+        });
+
+        test('`all()` returns a promise with list of model instances', () => {
+            return modelAll(model).then((all) => {
+                expect(all[0].get('slug')).toBeDefined();
             });
         });
 
@@ -28,11 +49,6 @@ for (let model of MODELS) {
             expect(tmp_model.get(attribute)).toBe(value);
         });
 
-        test('`all()` returns a promise with list of model instances', () => {
-           return model.all().then((response) => {
-               expect(response[0]).toBeInstanceOf(model);
-           });
-        });
 
         test('`find(slug)` returns a promise with a model instance', () => {
             return model.all().then(async (models) => {
