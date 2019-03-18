@@ -50,4 +50,16 @@ export class Form {
 
         return this.invalidElements.length === 0;
     }
+
+    factory() {
+        // @ts-ignore
+        let out: JSON = {};
+
+        this.elements.filter((value) => {
+            // @ts-ignore
+            out[value.name.toLowerCase()] = value.fake();
+        });
+
+        return out;
+    }
 }
