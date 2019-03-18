@@ -1,6 +1,6 @@
 import {Portal} from "./Portal";
 import {App} from "./models/App";
-import {ModelInterfaceStatic} from "./interfaces/ModelInterface";
+import {ModelInterface, ModelInterfaceStatic} from "./interfaces/ModelInterface";
 
 const MODELS = [
   App,
