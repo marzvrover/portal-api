@@ -1,12 +1,14 @@
 import {Model} from "../Model";
 import {ModelInterface, ModelInterfaceStatic, staticImplements} from "../interfaces/ModelInterface";
 import pluralize = require("pluralize");
+import {Form} from "../form/Form";
 
 @staticImplements<ModelInterfaceStatic>()
 export class App extends Model implements ModelInterface {
     type: ModelInterfaceStatic = App;
     static model_name: string = 'app';
 
+    static form: Form;
     static booted: boolean = false;
 
     constructor(params?: any) {
@@ -69,7 +71,12 @@ export class App extends Model implements ModelInterface {
         );
     }
 
-    form() {
-        return super.form(this.type.model_name);
+    static define() {
+        return super.define(this.model_name).then((response) => {
+            this.form = new Form(response);
+
+            return this.form;
+        });
+    }
     }
 }

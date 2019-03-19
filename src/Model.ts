@@ -86,8 +86,10 @@ export abstract class Model {
         return Portal.API.delete(model_name, id);
     }
 
-    form(model_name: string) {
-        return Portal.API.form(model_name);
+    static define(model_name: string) {
+        return Portal.API.form(model_name).then((response) => {
+            return response[model_name];
+        });
     }
 
     /**
