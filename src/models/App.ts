@@ -86,7 +86,7 @@ export class App extends Model implements ModelInterface {
         return new this(this.form.factory());
     }
 
-    validate() {
+    validate(): boolean {
         return this.type.form.validate(super.getAttributes());
     }
 }
