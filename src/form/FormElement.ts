@@ -77,7 +77,7 @@ export class FormElement {
                 break;
             case 'file':
             default:
-                fake = undefined;
+                fake = 'placeholder :(';
                 break;
         }
 
