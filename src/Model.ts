@@ -24,6 +24,10 @@ export abstract class Model {
         this.attributes[name] = value;
     }
 
+    getAttributes() {
+        return this.attributes;
+    }
+
     get(name: string) {
         if (this.attributes.hasOwnProperty(name)) {
             // @ts-ignore
