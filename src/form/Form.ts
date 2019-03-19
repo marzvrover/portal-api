@@ -4,8 +4,24 @@ export class Form {
     protected elements: FormElement[] = [];
     protected invalidElements: FormElement[] = [];
 
-    constructor(elements?: FormElement[]) {
-        if (elements !== undefined) this.elements = elements;
+    constructor(elements?: FormElement[] | JSON) {
+        if (elements !== undefined) {
+            if (Array.isArray(elements)) this.elements = elements;
+            else {
+                this.fromJSON(elements);
+            }
+        }
+
+    }
+
+    private fromJSON(elements: JSON) {
+        let keys = Object.keys(elements);
+
+        for (let key of keys) {
+            // @ts-ignore
+            let elem = new FormElement(key, elements[key].type, elements[key].required);
+            this.addElement(elem);
+        }
     }
 
     addElement(element: FormElement) {
