@@ -15,10 +15,13 @@ export namespace Portal {
 
     export const App = importApp;
     export type App = importApp;
-    App.boot();
 
     export function ucfirst(str: string)
     {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    export async function init() {
+        await App.boot();
     }
 }
