@@ -16,7 +16,10 @@ export class App extends Model implements ModelInterface {
         (this.type.booted || this.type.boot())
     }
 
-    static boot() {
+    static async boot() {
+        if (this.booted) return;
+
+        await this.define();
         this.booted = true;
     }
 
