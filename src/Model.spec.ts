@@ -23,24 +23,29 @@ async function modelAll(model: ModelInterfaceStatic) {
 
 for (let model of MODELS) {
     describe(Portal.ucfirst(model.model_name), () => {
-        test('Model will boot', () => {
-            new model(); // should boot
-            expect(Portal.App.booted).toBe(true);
+        test(model.model_name + ' will boot', () => {
+            return Portal.init().then(() => {
+                expect(model.booted).toBe(true);
+            });
         });
 
-        test('Model can access API', () => {
+        test(model.model_name + ' can access API', () => {
             return modelAll(model).then((all) => {
                 expect(all).toBeDefined();
             });
         });
 
-        test('`all()` returns a promise with list of model instances', () => {
+        test(model.model_name + ' builds form', () => {
+            expect(model.form).toBeDefined();
+        });
+
+        test('`all()` returns a promise with list of ' + model.model_name + ' instances', () => {
             return modelAll(model).then((all) => {
                 expect(all[0].get('slug')).toBeDefined();
             });
         });
 
-        test('`find(slug)` returns a promise with a model instance', () => {
+        test('`find(slug)` returns a promise with a ' + model.model_name + ' instance', () => {
             return model.all().then(async (models) => {
                 let slug: string = '';
 
@@ -61,7 +66,7 @@ for (let model of MODELS) {
             });
         });
 
-        test('Model can set and get attributes', () => {
+        test(model.model_name + ' can set and get attributes', () => {
             const attribute = 'test_attribute';
             const value = "test_value";
 
@@ -78,7 +83,7 @@ for (let model of MODELS) {
             testModel = undefined;
         });
 
-        test('`create(attributes)` returns a promise with a model ' +
+        test('`create(attributes)` returns a promise with a '  + model.model_name +
             'instance that has been saved to the server', () => {
 
             if (model.model_name == App.model_name) {
@@ -87,6 +92,7 @@ for (let model of MODELS) {
                     'url': 'https://test.url',
                     'iconPath': 'testing/path'
                 }).then((response) => {
+                    expect(response).toBeInstanceOf(model);
                     expect(response.get('slug')).toBeDefined();
                     testModel = response;
                 });
@@ -107,7 +113,7 @@ for (let model of MODELS) {
             expect(testModel.get('name')).toBe(name);
         });
 
-        test('`update()` method updates the model with the current ' +
+        test('`update()` method updates the ' + model.model_name + ' with the current ' +
             'information from the API', async () => {
 
             if (testModel == undefined) {
@@ -139,7 +145,7 @@ for (let model of MODELS) {
             expect(testModel.get('name')).toBe(name);
         });
 
-        test('`delete()` method deletes the model via the API', async () => {
+        test('`delete()` method deletes the ' + model.model_name + ' via the API', async () => {
             if (testModel == undefined) {
                 throw Error('testModel not defined');
             }
@@ -153,6 +159,14 @@ for (let model of MODELS) {
             await model.find(slug).then((response) => {
                 expect(response).toBeUndefined();
             });
+        });
+
+        test('`factory()` method returns a fake ' + model.model_name, () => {
+            expect(model.factory()).toBeInstanceOf(model);
+        });
+
+        test('`validate()` validates the '+ model.model_name, () => {
+            expect(model.factory().validate()).toBeTruthy();
         });
     });
 }
