@@ -1,3 +1,5 @@
+import {Form} from "../form/Form";
+
 export interface ModelInterface {
     type: ModelInterfaceStatic;
 
@@ -9,17 +11,20 @@ export interface ModelInterface {
     update(): any;
     save(): any;
     delete(): any;
-    form(): any;
+    validate(): boolean;
 }
 
 export interface ModelInterfaceStatic {
     model_name: string;
     booted: boolean;
+    form: Form;
 
     boot(): void;
     all(): any;
     find(id: string): any;
     create(attributes: any): any;
+    define(): any;
+    factory(): any;
 }
 
 export function staticImplements<T>() {
