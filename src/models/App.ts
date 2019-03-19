@@ -81,5 +81,12 @@ export class App extends Model implements ModelInterface {
             return this.form;
         });
     }
+
+    static factory() {
+        return new this(this.form.factory());
+    }
+
+    validate() {
+        return this.type.form.validate(super.getAttributes());
     }
 }
