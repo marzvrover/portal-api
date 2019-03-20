@@ -64,12 +64,13 @@ export abstract class Model {
         });
     }
 
-    save(model_name: string) {
-        // return Portal.API.add(model_name, this.attributes);
-
+    save(model_name: string, type: ModelInterfaceStatic) {
         let promise;
 
-        if (this.get('slug') === undefined) {
+        if (! type.form.validate(this.getAttributes())) {
+            promise = Promise.reject(model_name + ' failed to validate.');
+        }
+        else if (this.get('slug') === undefined) {
             promise = Portal.API.add(model_name, this.attributes).then((response) => {
                 this.addAttributes(response[model_name]);
 
