@@ -57,7 +57,7 @@ export class App extends Model implements ModelInterface {
     }
 
     save() {
-        return super.save(this.type.model_name);
+        return super.save(this.type.model_name, this.type);
     }
 
     static async create(attributes: any) {
