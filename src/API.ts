@@ -128,6 +128,8 @@ export class API {
                             console.log(response);
                         }
 
+                        if (response.data.hasOwnProperty('success') && ! response.data.success)
+                            reject('Response declared request unsuccessful');
                         resolve(response.data);
                     })
                     .catch((error) => {
