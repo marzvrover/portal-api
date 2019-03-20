@@ -15,11 +15,11 @@ export class FormElement {
     validate(value: any): boolean {
         let valid: boolean = false;
 
-        if (value !== undefined) {
+        if (value !== undefined && value !== null) {
             switch (this.type.toLowerCase()) {
                 case 'text':
                 case 'textarea':
-                    valid = !validator.isEmpty(value);
+                    valid = ! validator.isEmpty(value);
                     break;
                 case 'email':
                     valid = validator.isEmail(value);
@@ -35,16 +35,16 @@ export class FormElement {
                     valid = validator.isIP(value);
                     break;
                 case 'grouptype':
-                    valid = !validator.isEmpty(value);
+                    valid = ! validator.isEmpty(value);
                     break;
                 case 'file':
                 default:
-                    valid = value !== undefined || value !== null;
+                    valid = true;
                     break;
             }
         }
 
-        if (! this.required && (value == undefined || value == '' || value == null))
+        if (! this.required && (value === null || value === undefined || value == ''))
             valid = true;
 
         return valid;
