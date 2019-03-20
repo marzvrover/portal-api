@@ -2,6 +2,7 @@ import * as Settings from './Settings';
 import { API as importAPI } from './API';
 import { Model as importModel } from './Model';
 import { App as importApp } from './models/App';
+import { User as importUser } from './models/User';
 
 export namespace Portal {
     export const VERSION = Settings.VERSION;
@@ -15,6 +16,8 @@ export namespace Portal {
 
     export const App = importApp;
     export type App = importApp;
+    export const User = importUser;
+    export type User = importUser;
 
     export function ucfirst(str: string)
     {
@@ -23,5 +26,6 @@ export namespace Portal {
 
     export async function init() {
         await App.boot();
+        await User.boot();
     }
 }

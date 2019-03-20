@@ -1,9 +1,9 @@
 import {Portal} from "./Portal";
-import {App} from "./models/App";
 import {ModelInterface, ModelInterfaceStatic} from "./interfaces/ModelInterface";
 
 const MODELS = [
-  App,
+    Portal.App,
+    Portal.User,
 ];
 
 let modelAllLoaded = {};
