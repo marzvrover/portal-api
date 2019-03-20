@@ -84,19 +84,12 @@ for (let model of MODELS) {
         });
 
         test('`create(attributes)` returns a promise with a '  + model.model_name +
-            'instance that has been saved to the server', () => {
-
-            if (model.model_name == App.model_name) {
-                return model.create({
-                    'name': 'test-name',
-                    'url': 'https://test.url',
-                    'iconPath': 'testing/path'
-                }).then((response) => {
-                    expect(response).toBeInstanceOf(model);
-                    expect(response.get('slug')).toBeDefined();
-                    testModel = response;
-                });
-            }
+            ' instance that has been saved to the server', () => {
+            return model.create(model.form.factory()).then((response) => {
+                expect(response).toBeInstanceOf(model);
+                expect(response.get('slug')).toBeDefined();
+                testModel = response;
+            });
         });
 
         test('`save()` method saves via the API', async () => {
