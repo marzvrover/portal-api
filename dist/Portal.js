@@ -47,6 +47,7 @@ var API_1 = require("./API");
 var Model_1 = require("./Model");
 var App_1 = require("./models/App");
 var User_1 = require("./models/User");
+var Image_1 = require("./datatypes/image/Image");
 exports.Settings = importSettings;
 exports.API = API_1.API;
 exports.Model = Model_1.Model;
@@ -61,17 +62,38 @@ function init(options) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    /*
+                     * Handle Options
+                     *
+                     * Update the settings before booting any object.
+                     */
                     if (options) {
                         if (options.hasOwnProperty('settings')) {
                             // @ts-ignore
                             updateSettings(options.settings);
                         }
                     }
+                    /*
+                     * Boot API before models.
+                     *
+                     * This will ensure that the API is ready to use before the models use it.
+                     */
                     return [4 /*yield*/, exports.API.boot()];
                 case 1:
+                    /*
+                     * Boot API before models.
+                     *
+                     * This will ensure that the API is ready to use before the models use it.
+                     */
                     _a.sent();
+                    /*
+                     * Boot models.
+                     */
                     return [4 /*yield*/, exports.App.boot()];
                 case 2:
+                    /*
+                     * Boot models.
+                     */
                     _a.sent();
                     return [4 /*yield*/, exports.User.boot()];
                 case 3:
@@ -90,4 +112,8 @@ function updateSettings(options) {
         importSettings[key] = options[key];
     }
 }
+var datatypes;
+(function (datatypes) {
+    datatypes.Image = Image_1.Image;
+})(datatypes = exports.datatypes || (exports.datatypes = {}));
 //# sourceMappingURL=Portal.js.map

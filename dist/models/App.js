@@ -57,12 +57,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Model_1 = require("../Model");
 var ModelInterface_1 = require("../interfaces/ModelInterface");
 var pluralize = require("pluralize");
-var Form_1 = require("../form/Form");
+var Form_1 = require("../datatypes/form/Form");
+var ImageManager_1 = require("../datatypes/image/ImageManager");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(params) {
         var _this = _super.call(this, params) || this;
         _this.type = App_1;
+        _this.image = new ImageManager_1.ImageManager();
         (_this.type.booted || _this.type.boot());
         return _this;
     }
@@ -84,10 +86,20 @@ var App = /** @class */ (function (_super) {
         });
     };
     App.prototype.get = function (name) {
+        if (name == 'image')
+            return this.image.resolve();
         return _super.prototype.get.call(this, name);
     };
     App.prototype.set = function (name, value) {
+        if (name == 'image' && this.image.old == undefined)
+            this.image.old = value;
         return _super.prototype.set.call(this, name, value);
+    };
+    App.prototype.getAttributes = function () {
+        var attributes = _super.prototype.getAttributes.call(this);
+        //  @ts-ignore
+        attributes.image = this.image.resolve();
+        return attributes;
     };
     App.all = function () {
         var _this = this;
@@ -147,7 +159,7 @@ var App = /** @class */ (function (_super) {
         return new this(this.form.factory());
     };
     App.prototype.validate = function () {
-        return this.type.form.validate(_super.prototype.getAttributes.call(this));
+        return this.type.form.validate(this.getAttributes());
     };
     var App_1;
     App.model_name = 'app';

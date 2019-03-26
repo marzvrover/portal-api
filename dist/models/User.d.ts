@@ -1,6 +1,6 @@
 import { Model } from "../Model";
 import { ModelInterface, ModelInterfaceStatic } from "../interfaces/ModelInterface";
-import { Form } from "../form/Form";
+import { Form } from "../datatypes/form/Form";
 export declare class User extends Model implements ModelInterface {
     type: ModelInterfaceStatic;
     static model_name: string;

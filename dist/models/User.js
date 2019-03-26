@@ -57,7 +57,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Model_1 = require("../Model");
 var ModelInterface_1 = require("../interfaces/ModelInterface");
 var pluralize = require("pluralize");
-var Form_1 = require("../form/Form");
+var Form_1 = require("../datatypes/form/Form");
 var User = /** @class */ (function (_super) {
     __extends(User, _super);
     function User(params) {
