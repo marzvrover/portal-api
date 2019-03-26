@@ -1,12 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var FormElement_1 = require("./FormElement");
 var Form = /** @class */ (function () {
     function Form(elements) {
         this.elements = [];
         this.invalidElements = [];
-        if (elements !== undefined)
-            this.elements = elements;
+        if (elements !== undefined) {
+            if (Array.isArray(elements))
+                this.elements = elements;
+            else {
+                this.fromJSON(elements);
+            }
+        }
     }
+    Form.prototype.fromJSON = function (elements) {
+        var keys = Object.keys(elements);
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
+            // @ts-ignore
+            var elem = new FormElement_1.FormElement(key, elements[key].type, elements[key].required);
+            this.addElement(elem);
+        }
+    };
     Form.prototype.addElement = function (element) {
         this.elements.push(element);
     };
@@ -43,6 +58,15 @@ var Form = /** @class */ (function () {
             }
         });
         return this.invalidElements.length === 0;
+    };
+    Form.prototype.factory = function () {
+        // @ts-ignore
+        var out = {};
+        this.elements.filter(function (value) {
+            // @ts-ignore
+            out[value.name.toLowerCase()] = value.fake();
+        });
+        return out;
     };
     return Form;
 }());

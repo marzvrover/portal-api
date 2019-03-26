@@ -58,16 +58,16 @@ var Model_1 = require("../Model");
 var ModelInterface_1 = require("../interfaces/ModelInterface");
 var pluralize = require("pluralize");
 var Form_1 = require("../form/Form");
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App(params) {
+var User = /** @class */ (function (_super) {
+    __extends(User, _super);
+    function User(params) {
         var _this = _super.call(this, params) || this;
-        _this.type = App_1;
+        _this.type = User_1;
         (_this.type.booted || _this.type.boot());
         return _this;
     }
-    App_1 = App;
-    App.boot = function () {
+    User_1 = User;
+    User.boot = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -83,13 +83,13 @@ var App = /** @class */ (function (_super) {
             });
         });
     };
-    App.prototype.get = function (name) {
+    User.prototype.get = function (name) {
         return _super.prototype.get.call(this, name);
     };
-    App.prototype.set = function (name, value) {
+    User.prototype.set = function (name, value) {
         return _super.prototype.set.call(this, name, value);
     };
-    App.all = function () {
+    User.all = function () {
         var _this = this;
         return _super.all.call(this, this.model_name).then(function (response) {
             var models = [];
@@ -100,7 +100,7 @@ var App = /** @class */ (function (_super) {
             return models;
         });
     };
-    App.find = function (id) {
+    User.find = function (id) {
         var _this = this;
         return _super.find.call(this, this.model_name, id).then(function (response) {
             if (!response.hasOwnProperty(_this.model_name))
@@ -109,16 +109,16 @@ var App = /** @class */ (function (_super) {
                 return new _this(response[_this.model_name]);
         });
     };
-    App.prototype.update = function () {
+    User.prototype.update = function () {
         var _this = this;
         return _super.prototype.update.call(this, this.type.model_name).then(function () {
             return _this;
         });
     };
-    App.prototype.save = function () {
+    User.prototype.save = function () {
         return _super.prototype.save.call(this, this.type.model_name, this.type);
     };
-    App.create = function (attributes) {
+    User.create = function (attributes) {
         return __awaiter(this, void 0, void 0, function () {
             var model;
             return __generator(this, function (_a) {
@@ -133,29 +133,29 @@ var App = /** @class */ (function (_super) {
             });
         });
     };
-    App.prototype.delete = function () {
+    User.prototype.delete = function () {
         return _super.prototype.delete.call(this, this.type.model_name, this.get('slug')).then(function (response) { return response.success; });
     };
-    App.define = function () {
+    User.define = function () {
         var _this = this;
         return _super.define.call(this, this.model_name).then(function (response) {
             _this.form = new Form_1.Form(response);
             return _this.form;
         });
     };
-    App.factory = function () {
+    User.factory = function () {
         return new this(this.form.factory());
     };
-    App.prototype.validate = function () {
+    User.prototype.validate = function () {
         return this.type.form.validate(_super.prototype.getAttributes.call(this));
     };
-    var App_1;
-    App.model_name = 'app';
-    App.booted = false;
-    App = App_1 = __decorate([
+    var User_1;
+    User.model_name = 'user';
+    User.booted = false;
+    User = User_1 = __decorate([
         ModelInterface_1.staticImplements()
-    ], App);
-    return App;
+    ], User);
+    return User;
 }(Model_1.Model));
-exports.App = App;
-//# sourceMappingURL=App.js.map
+exports.User = User;
+//# sourceMappingURL=User.js.map
