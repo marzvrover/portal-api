@@ -52,6 +52,6 @@
     "npm-watch": "^0.6.0",
     "pluralize": "^7.0.0",
     "qs": "^6.6.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   }
 }
